@@ -1,7 +1,6 @@
 // Variables
 var quizContainer = document.getElementById("quiz");
 var resultsContainer = document.getElementById("answers");
-var submitButton = document.getElementById("submit");
 
 const quizQuestions = [
   {
