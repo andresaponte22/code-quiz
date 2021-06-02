@@ -1,4 +1,4 @@
-// Variables
+// Grabbing the HTML elements to dynamically change them with java
 var startButton = document.getElementById('start-btn')
 var nextButton = document.getElementById('next-btn')
 var questionContainerElement = document.getElementById('question-container')
@@ -7,15 +7,14 @@ var answerButtonsElement = document.getElementById('answer-btns')
 var highscoreContainerElement = document.getElementById('highscore-container')
 var usernameInput = document.getElementById('username')
 var submitButtonElement = document.getElementById('submitUsername')
-
 var highscoreDisplayElement = document.getElementById('highscore-display')
-
 var usernameDisplay = document.getElementById('username-input')
 var scoreDisplay = document.getElementById('score')
+var timerDisplayElement = document.getElementById('timer-count')
 
 let shuffledQuestions, currentQuestionIndex
 var countRightAnswers = 0
-let timer = 0
+let timer, timerCount
 
 // Object and keys for quiz questions and answers
 const questions = [
@@ -65,7 +64,6 @@ nextButton.addEventListener('click', () => {
 })
 
 submitButtonElement.addEventListener('click', function() {
-  console.log(usernameInput.value)
 
   localStorage.setItem("username", usernameInput.value)
   localStorage.setItem("score", countRightAnswers)
@@ -79,25 +77,27 @@ submitButtonElement.addEventListener('click', function() {
   scoreDisplay.textContent = localStorage.getItem("score")
 
   startButton.setAttribute('disabled', false)
-
-
 })
 
 
 // Functions
+// Start game fucntion to kick things pff
 function startGame() {
   startButton.classList.add('hide')
   shuffledQuestions = questions.sort(() => Math.random() - .5)
   currentQuestionIndex = 0
   questionContainerElement.classList.remove('hide')
+  timerCount = 20
   setNextQuestion()
 }
 
+// Sets the next question
 function setNextQuestion() {
   resetState()
   showQuestion(shuffledQuestions[currentQuestionIndex])
 }
 
+// Displays the question on the site by passing the question var as a parameter
 function showQuestion(question) {
   questionElement.innerText = question.question
   question.answers.forEach(answer => {
@@ -112,6 +112,7 @@ function showQuestion(question) {
   })
 }
 
+// Clears the state of html elements to get ready for next question
 function resetState() {
   clearStatusClass(document.body)
   nextButton.classList.add('hide')
@@ -120,6 +121,7 @@ function resetState() {
   }
 }
 
+// Grabs the event to check where the user clicked, also checks for right or wrong answer
 function selectAnswer(e) {
   var selectedButton = e.target
   var correct = selectedButton.dataset.correct
@@ -133,7 +135,6 @@ function selectAnswer(e) {
     startButton.innerText = 'Restart'
     startButton.classList.remove('hide')
     startButton.setAttribute('disabled', true)
-    // add highscore functionality
     highscoreContainerElement.classList.remove('hide')
   }
   if (selectedButton.dataset = correct) {
@@ -142,6 +143,7 @@ function selectAnswer(e) {
   document.getElementById('right-answers').innerHTML = countRightAnswers
 }
 
+// Sets the class to the corresponding html element depending on whether the user clicked on a right or wrong answer
 function setStatusClass(element, correct) {
   clearStatusClass(element)
   if (correct) {
@@ -151,6 +153,7 @@ function setStatusClass(element, correct) {
   }
 }
 
+// Clears the class of the corresponding element so we're ready for the next question
 function clearStatusClass(element) {
   element.classList.remove('correct')
   element.classList.remove('wrong')
