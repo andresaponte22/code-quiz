@@ -9,8 +9,20 @@
 
 <body>
   <div class="container">
+    <span class="hide" id="right-answers"></span>
+
+    <div class="hide" id="highscore-container">
+      <input type="text" id="username"/>
+      <button id="submitUsername">Submit</button>
+    </div> 
+
+    <div class="hide" id="highscore-display">
+      <p>Username: <span id="username-input"></span></p>
+      <p>Score: <span id="score"></span></p>
+    </div>
+
     <div id="question-container" class="hide">
-      <div id="question">Question</div>
+      <div id="question"></div>
       <div id="answer-btns" class="btn-grid">
         <button class="btn">Answer 1</button>
         <button class="btn">Answer 2</button>
@@ -25,7 +37,7 @@
   </div>
 
 
-<script src="./assets/script.js"></script>
+  <script src="./assets/script.js"></script>
 </body>
 
 </html>
